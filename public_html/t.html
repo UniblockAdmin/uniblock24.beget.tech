@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="lib_web3/web3/dist/web3.min.js"></script>
+</head>
+<body>
+    
+    <button id="sendTokensButton" onclick="sendTokens()">Отправить токены</button>
+    
+    <script>
+        const web3 = new Web3('http://194.87.147.75:8545/');
+        
+        const contractABI = 'deployed_contracts/UBToken.json';
+        let contract;
+        let abi;
+
+
+        async function loadJSON(url) {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Ошибка загрузки JSON: ${response.status}`);
+            }
+            return response.json();
+        }
+
+        loadJSON(contractABI)
+            .then(data => {
+                abi = data;
+                const contractAddress = '0x2f7EdF1AE293106Ff4C706eb9210645AdE6fF145';
+                contract = new web3.eth.Contract(abi.abi, contractAddress);
+            })
+            .catch(error => {
+                console.error(`Ошибка загрузки JSON: ${error.message}`);
+            });
+
+        const toAddress = '0x4bCBFBD0FAd8dcaB77bEBf54134Fa66Ef0717D2a';
+        const tokenAmount = 111547;
+
+        /*function sendTokens() {
+            console.log(abi.abi);
+            alert("Try apply");
+            contract.methods.transfer(toAddress, tokenAmount).send({ from: '0x4bCBFBD0FAd8dcaB77bEBf54134Fa66Ef0717D2a' })
+                .on('transactionHash', function (hash) {
+                    console.log('Хэш транзакции:', hash);
+                })
+                .on('receipt', function (receipt) {
+                    console.log('Транзакция выполнена:', receipt);
+                })
+                .on('error', function (error) {
+                    console.error('Ошибка при выполнении транзакции:', error);
+                });
+        }*/
+        
+        function sendTokens() {
+            console.log(abi.abi);
+            alert("Try apply");
+            
+            const privateKey = '0x348fe7691e8db0d6eddb01c99ffee9a06e5f3428d205f54317290fcfbd2ba779';
+            const fromAddress = '0x7aF6BeFe6e7070DA95a7aC4f942d055dE383CA29';
+            web3.eth.accounts.wallet.add(privateKey);
+
+            contract.methods.transfer(toAddress, tokenAmount).send({ from: fromAddress, gas: 2000000 })
+                .on('transactionHash', function (hash) {
+                    console.log('Хэш транзакции:', hash);
+                })
+                .on('receipt', function (receipt) {
+                    console.log('Транзакция выполнена:', receipt);
+                })
+                .on('error', function (error) {
+                    console.error('Ошибка при выполнении транзакции:', error);
+                });
+        }
+
+    </script>
+    
+</body>
+</html>
