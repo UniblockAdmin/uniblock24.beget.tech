@@ -12,7 +12,7 @@ if($sql->num_rows == 0){
                             <div class="col">
                                 <p style="margin-top:15px;"><b>Название: </b>'.$r['name'].'</p>
                                 <p><b>Адрес контракта: </b>0x'.$r['hash'].'</p>
-                                <button align="right" style="float:right" class="btn btn-dark" onclick="ShowContract('.$r['id'].',\''.$r['name'].'\',\''.$r['description'].'\',\''.$r['created_date'].'\',\''.$r['fileName'].'\','.$r['adminApproved'].','.$r['clientApproved'].','.$r['id'].',\''.$r['genFile'].'\',\''.$r['hash'].'\',\''.$r['senderAddress'].'\',\''.$r['ticket'].'\');" title="Открыть информацию о контракте"><img style="width:22px;" src="../images/view.png"> Открыть контракт</button>
+                                <button align="right" style="float:right" class="btn btn-dark" onclick="ShowContract('.$r['id'].',\''.$r['name'].'\',\''.$r['created_date'].'\',\''.$r['fileName'].'\','.$r['adminApproved'].','.$r['clientApproved'].','.$r['id'].',\''.$r['genFile'].'\',\''.$r['hash'].'\',\''.$r['senderAddress'].'\',\''.$r['ticket'].'\');" title="Открыть информацию о контракте"><img style="width:22px;" src="../images/view.png"> Открыть контракт</button>
                             </div>
                         </div></div>';
     }

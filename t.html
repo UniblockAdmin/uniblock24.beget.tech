@@ -29,15 +29,15 @@
         loadJSON(contractABI)
             .then(data => {
                 abi = data;
-                const contractAddress = '0x2f7EdF1AE293106Ff4C706eb9210645AdE6fF145';
+                const contractAddress = '0x80B34CF7Ea2F940395500B6B38E051aAF8467588';
                 contract = new web3.eth.Contract(abi.abi, contractAddress);
             })
             .catch(error => {
                 console.error(`Ошибка загрузки JSON: ${error.message}`);
             });
 
-        const toAddress = '0x4bCBFBD0FAd8dcaB77bEBf54134Fa66Ef0717D2a';
-        const tokenAmount = 111547;
+        const toAddress = '0xFDfFeBA60F7c20245bCa7ce94fdDbF1f96830307';
+        const tokenAmount = 100;
 
         /*function sendTokens() {
             console.log(abi.abi);
@@ -62,7 +62,7 @@
             const fromAddress = '0x7aF6BeFe6e7070DA95a7aC4f942d055dE383CA29';
             web3.eth.accounts.wallet.add(privateKey);
 
-            contract.methods.transfer(toAddress, tokenAmount).send({ from: fromAddress, gas: 2000000 })
+            contract.methods.transfer(toAddress, tokenAmount).send({ from: fromAddress, gas: 990000 })
                 .on('transactionHash', function (hash) {
                     console.log('Хэш транзакции:', hash);
                 })

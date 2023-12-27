@@ -142,7 +142,7 @@ if(!isset($_SESSION['email'])){
                         loadJSON(contractABI)
                         .then(data => {
                             abi = data;
-                            const contractAddress = '0x2f7EdF1AE293106Ff4C706eb9210645AdE6fF145';
+                            const contractAddress = '0x80B34CF7Ea2F940395500B6B38E051aAF8467588';
                             contract = new web3.eth.Contract(abi.abi, contractAddress);
                         })
                         .catch(error => {
@@ -187,34 +187,35 @@ if(!isset($_SESSION['email'])){
                     
                     }
                     
-                    function sendTokens(privateKey,fromAddress,tokenAmount,toAddress) {
-          
-                        console.log(fromAddress);
-                        console.log(toAddress);
-                        
-                        
-                        web3.eth.accounts.wallet.add(privateKey);
-            
-                        contract.methods.transfer(toAddress, tokenAmount).send({ from: fromAddress, gas: 2000000 })
-                            .on('transactionHash', function (hash) {
-                                console.log('Хэш транзакции:', hash);
-    
-                            })
-                            .on('receipt', function (receipt) {
-                                console.log('Транзакция выполнена:', receipt);
-                                re_re = receipt;
-                                re_hash = re_re['blockHash'];
-                                re_bl = re_re['blockNumber'];
-                                re_from = re_re['from'];
-                                re_to = re_re['to'];
-                                
-                                document.getElementById('loaderr').style.display = "none";
-                                document.getElementById('rre').innerHTML = "<b>Хэш транзакции:</b> "+re_hash+"<br><b>Номер блока:</b> "+re_bl+"<br><b>Адрес отправителя:</b> "+re_from+"<br><b>Адрес получателя:</b> "+toAddress+"<br><b>Сумма токенов:</b> "+re_tokenAmount;
-                                document.getElementById('inf').style.display = "block";
-                            })
-                            .on('error', function (error) {
-                                console.error('Ошибка при выполнении транзакции:', error);
-                            });
+                    function sendTokens(privateKey, fromAddress, tokenAmount, toAddress) {
+                       console.log(fromAddress);
+                       console.log(toAddress);
+                    
+                       // Convert token amount to Wei
+                       const tokenAmountInWei = web3.utils.toWei(tokenAmount.toString(), 'ether');
+                    
+                       web3.eth.accounts.wallet.add(privateKey);
+                    
+                       contract.methods.transfer(toAddress, tokenAmountInWei).send({ from: fromAddress, gas: 2000000 })
+                          .on('transactionHash', function (hash) {
+                             console.log('Transaction Hash:', hash);
+                          })
+                          .on('receipt', function (receipt) {
+                             console.log('Transaction Receipt:', receipt);
+                    
+                             // Extract relevant information from the transaction receipt and display it on the page
+                             const re_hash = receipt.blockHash;
+                             const re_bl = receipt.blockNumber;
+                             const re_from = receipt.from;
+                             const re_to = receipt.to;
+                             
+                             document.getElementById('loaderr').style.display = "none";
+                             document.getElementById('rre').innerHTML = `<b>Transaction Hash:</b> ${re_hash}<br><b>Block Number:</b> ${re_bl}<br><b>Sender Address:</b> ${re_from}<br><b>Receiver Address:</b> ${toAddress}<br><b>Token Amount:</b> ${tokenAmount}`;
+                             document.getElementById('inf').style.display = "block";
+                          })
+                          .on('error', function (error) {
+                             console.error('Error executing transaction:', error);
+                          });
                     }
                      </script>
                   </li>

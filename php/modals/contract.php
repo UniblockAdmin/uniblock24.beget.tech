@@ -169,7 +169,7 @@ function formatApproveColorClient(value){
     }
 }
 var Sender;
-function ShowContract(id,name,desc,date,fileName,adminApp,clientApp,cId,fileSrc,hash,sender,ticket){
+function ShowContract(id,name,date,fileName,adminApp,clientApp,cId,fileSrc,hash,sender,ticket){
     document.getElementById('docF').innerHTML = "";
 
     var role = sender == '<? echo $user['wallet'] ?>' ? 0 : 2;

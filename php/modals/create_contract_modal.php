@@ -48,6 +48,12 @@ function CreateContractRequest(){
     var contractDesc = document.getElementById('contract_desc').value;
     var contractWallet = document.getElementById('contract_wallet').value;
     var contractTokens = document.getElementById('contract_tokens').value;
+    
+    if(contractWallet == GetWallet()){
+        alert("Вы не можете создать контракт на свой собственный адрес!");
+        return;
+    }
+    
     var wallet = "<? echo $user['wallet']; ?>";
     var privateKey = "<? echo $user['private_key']; ?>";
     $.post('php/create_contract.php', {
